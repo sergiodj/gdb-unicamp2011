@@ -1,0 +1,225 @@
+\documentclass[xcolor=pdftex,dvipsnames,table,t]{beamer}
+
+\usepackage{ae,aecompl}
+\usepackage[brazil]{babel}
+\usepackage[T1]{fontenc}
+%\usepackage{listings}
+%\lstset{language=sh,showstringspaces=true,showtabs=true}
+
+\usepackage{url}
+\usepackage{hyperref}
+%\usepackage{beamerthemesplit}
+\usepackage{xcolor}
+%\usepackage{multirow}
+\usepackage[utf8]{inputenc}
+
+%\usetheme{Boadilla}
+%\usetheme{Rochester}
+%\usetheme{CambridgeUS}
+
+%\usetheme{Copenhagen}
+%\usecolortheme{rose}
+
+\usetheme{Darmstadt}
+\usecolortheme{dolphin}
+
+%\usetheme{Warsaw}
+%\usecolortheme{whale}
+
+%\usetheme[secheader]{Madrid}
+
+\newcommand{\parametro}[1]{$<$#1$>$}
+
+\title{Aprendendo a depurar programas com o GDB}
+\author{Edjunior Machado \and
+	Sérgio Durigan Júnior}
+\date[Unicamp]{28 de Novembro de 2011}
+
+\begin{document}
+
+\frame{
+	\titlepage
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{images/gdb-logo.png}
+	\end{center}
+}
+
+\section{Introdução}
+\begin{frame}
+	\frametitle{Compilando com informações para depuração}
+	  \begin{itemize}
+	    \item \texttt{\$ gcc -g3 fonte.c -o programa}
+	    \item \texttt{\$ CFLAGS="-g3" ./configure; make}
+	  \end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Rodando GDB}
+	  \begin{itemize}
+	    \item \texttt{\$ gdb ./programa}
+	    \item \texttt{\$ gdb --args ./programa <arg1> <arg2>}
+	    \item \texttt{\$ gdb \\
+		(gdb) run <arg2> <arg2> ...}
+	  \end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Parando e Continuando} %FIXME
+	  \begin{itemize}
+	    \item Breakpoints
+	      \begin{itemize}
+		\item Breakpoints temporários
+	      \end{itemize}
+	    \item Watchpoints
+	      \begin{itemize}
+		\item read, access, write
+		\item Watchpoints condicionais
+	      \end{itemize}
+	    \item Catchpoints
+	      \begin{itemize}
+		\item \texttt{catch syscall}
+	      \end{itemize}
+	  \end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Parando e Continuando}
+	  \begin{itemize}
+	    \item \texttt{continue}
+	    \item \texttt{next}, \texttt{nexti}
+	    \item \texttt{step}, \texttt{stepi}
+	    \item \texttt{finish}
+	  \end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Examinando o código}
+	  \begin{itemize}
+	    \item \texttt{list}
+	    \item \texttt{disassemble}
+	    \item Especifique onde está o código fonte através do comando \texttt{dir <local>}
+	  \end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{TUI (Text User Interface)}
+	  \begin{itemize}
+	    \item Embora não muita difundida, é uma interface bastante útil
+	    \item Pressione CTRL+x a (ou CTRL+x 1 ou CRTL+x 2)
+	    \item Pode ter alguns problemas caso o programa sendo depurado utilize a saida padrão
+	  \end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Examinando dados}
+	  \begin{itemize}
+	    \item \texttt{print <var>}
+	    \begin{itemize}
+	      \item \texttt{p *array@<elementos>}
+	    \end{itemize}
+	    \item \texttt{x <var>}
+	    \item \texttt{whatis <var>}
+	    \item \texttt{display <var>}
+	    \item Configure a exibição de \texttt{structs} através de \\
+		  \texttt{set print pretty on}
+	  \end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Examinando dados}
+	  \begin{itemize}
+	    \item \texttt{bt}
+	    \item \texttt{frame}
+	    \item \texttt{up}, \texttt{down}
+	  \end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Alterando o programa depurado}
+	  \begin{itemize}
+	    \item Alterando os dados
+	      \begin{itemize}
+		\item \texttt{set var variavel = <valor>}
+		\item \texttt{set \{int\}0x9876 = 666}
+	      \end{itemize}
+	    \item Alterando o fluxo
+	      \begin{itemize}
+		\item \texttt{jump}
+		\item \texttt{return}
+	      \end{itemize}
+	  \end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Corefiles} %TODO maiores explicações?
+	  \begin{itemize}
+	  \item Habilite a criação de \texttt{corefiles} com \\
+		\texttt{\$ ulimit -c unlimited}
+	  \item Rodando o GDB \\
+		\texttt{\$ gdb programa core}
+	  \item De dentro do GDB \\
+		\texttt{generate-core-file} \\
+		\texttt{core}
+	  \end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Outras informações}
+	  \begin{itemize}
+	    \item \texttt{info}
+	    \begin{itemize}
+	      \item \texttt{info registers}
+	    \end{itemize}
+	  \end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Em dúvida sobre algum comando?}
+	  \begin{itemize}
+	    \item \texttt{help}
+	  \end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Outras funcionalidades}
+	  \begin{itemize}
+	    \item Tracepoints
+	    \item \texttt{forks} e \texttt{threads}
+	    \item Depuração reversa
+	    \item \texttt{gdbserver}
+	  \end{itemize}
+\end{frame}
+
+\section{Referências}
+\begin{frame}
+       \frametitle{Referências}
+        \begin{center}
+        \begin{itemize}
+		\item \textbf{Debugging with GDB} \\
+		http://sourceware.org/gdb/current/onlinedocs/gdb/
+	\end{itemize}
+        \end{center}
+\end{frame}
+
+\section{}
+\begin{frame}
+	\begin{center}
+	\LARGE
+	\alert{Obrigado!}
+
+	Dúvidas?
+
+
+	\vspace{2\baselineskip}
+
+	\small
+	Edjunior Machado \\
+	{\tt edjunior@gmail.com} \\
+	\vspace{1\baselineskip}
+	Sérgio Durigan Júnior \\
+	{\tt sergiosdj@gmail.com}
+	\end{center}
+\end{frame}
+
+\end{document}
+
