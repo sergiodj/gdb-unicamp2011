@@ -1,13 +1,10 @@
 CC = gcc
 CFLAGS = -g3 -O0
 
-all: breakwatch catch
+all: breakwatch catch hello
 
-breakwatch: breakwatch.c
-	$(CC) $(CFLAGS) $< -o breakwatch
-
-catch: catch.c
-	$(CC) $(CFLAGS) $< -o catch
+%.o: %.c
+	$(CC) -o $@ -c $< $(CFLAGS)
 
 clean:
-	rm -f breakwatch catch
+	rm -f breakwatch catch hello

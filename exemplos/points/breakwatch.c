@@ -16,10 +16,13 @@ teste (int n)
 int
 main (int argc, char **argv)
 {
-  int a, b;
+  int a, b, i;
 
   a = 5;
   b = teste (a) / 10;
+
+  for (i = 0; i < 10; i++)
+    a += teste(i);
 
   return 0;
 }
