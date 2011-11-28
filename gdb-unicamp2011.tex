@@ -48,8 +48,8 @@
 \begin{frame}
 	\frametitle{Compilando com informações para depuração}
 	  \begin{itemize}
-	    \item \texttt{\$ gcc -g3 fonte.c -o programa}
-	    \item \texttt{\$ CFLAGS="-g3" ./configure; make}
+	    \item \texttt{\$ gcc -g fonte.c -o programa}
+	    \item \texttt{\$ CFLAGS="-g3 -O0" ./configure; make}
 	  \end{itemize}
 \end{frame}
 
@@ -117,7 +117,7 @@
 	    \begin{itemize}
 	      \item \texttt{p *array@<elementos>}
 	    \end{itemize}
-	    \item \texttt{x <var>}
+	    \item \texttt{x <endereço>}
 	    \item \texttt{whatis <var>}
 	    \item \texttt{display <var>}
 	    \item Configure a exibição de \texttt{structs} através de \\
@@ -139,8 +139,8 @@
 	  \begin{itemize}
 	    \item Alterando os dados
 	      \begin{itemize}
-		\item \texttt{set var variavel = <valor>}
-		\item \texttt{set \{int\}0x9876 = 666}
+		\item \texttt{set var <variável> = <valor>}
+		\item \texttt{set \{int\}<endereço> = <valor>}
 	      \end{itemize}
 	    \item Alterando o fluxo
 	      \begin{itemize}
@@ -168,6 +168,9 @@
 	  \begin{itemize}
 	    \item \texttt{info}
 	    \begin{itemize}
+	      \item \texttt{info breakpoints}
+	      \item \texttt{info watchpoints}
+	      \item \texttt{info locals}
 	      \item \texttt{info registers}
 	    \end{itemize}
 	  \end{itemize}
