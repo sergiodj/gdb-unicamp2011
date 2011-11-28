@@ -44,7 +44,6 @@
 	\end{center}
 }
 
-\section{Introdução}
 \begin{frame}
 	\frametitle{Compilando com informações para depuração}
 	  \begin{itemize}
@@ -68,11 +67,12 @@
 	  \begin{itemize}
 	    \item Breakpoints
 	      \begin{itemize}
-		\item Breakpoints temporários
+		\item \texttt{break}
+		\item \texttt{tbreak} (breakpoint temporário)
 	      \end{itemize}
 	    \item Watchpoints
 	      \begin{itemize}
-		\item read, access, write
+		\item \texttt{watch} (escrita), \texttt{rwatch} (leitura) e \texttt{awatch} (acesso)
 		\item Watchpoints condicionais
 	      \end{itemize}
 	    \item Catchpoints
@@ -97,7 +97,8 @@
 	  \begin{itemize}
 	    \item \texttt{list}
 	    \item \texttt{disassemble}
-	    \item Especifique onde está o código fonte através do comando \texttt{dir <local>}
+	    \item Especifique onde está o código fonte através do comando \\
+		  \texttt{dir <local>}
 	  \end{itemize}
 \end{frame}
 
@@ -194,13 +195,17 @@
 	  \end{itemize}
 \end{frame}
 
-\section{Referências}
 \begin{frame}
        \frametitle{Referências}
         \begin{center}
         \begin{itemize}
+		\item \textbf{GDB: The GNU Project Debugger} \\
+		http://sourceware.org/gdb/
 		\item \textbf{Debugging with GDB} \\
 		http://sourceware.org/gdb/current/onlinedocs/gdb/
+		\item \textbf{GDB Wiki} \\
+		http://sourceware.org/gdb/wiki/
+		\item canal \texttt{\#gdb} na Freenode
 	\end{itemize}
         \end{center}
 \end{frame}
