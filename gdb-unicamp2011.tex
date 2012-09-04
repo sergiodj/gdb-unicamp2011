@@ -33,7 +33,7 @@
 \title{Aprendendo a depurar programas com o GDB}
 \author{Edjunior Machado \and
 	Sérgio Durigan Júnior}
-\date[Unicamp]{28 de Novembro de 2011}
+\date[Unicamp]{\today}
 
 \begin{document}
 
@@ -44,155 +44,174 @@
 	\end{center}
 }
 
-\begin{frame}
-	\frametitle{Compilando com informações para depuração}
-	  \begin{itemize}
-	    \item \texttt{\$ gcc -g fonte.c -o programa}
-	    \item \texttt{\$ CFLAGS="-g3 -O0" ./configure; make}
-	  \end{itemize}
+\begin{frame}[fragile]
+	\frametitle{Antes de mais nada...}
+	\begin{itemize}
+	  \item{O \verb|TAB| é seu amigo}
+	  \item{\verb|help| e \verb|apropos| também}
+	\end{itemize}
 \end{frame}
 
-\begin{frame}
-	\frametitle{Rodando GDB}
+% Para usar \verb||, o frame tem que ser marcado como fragile.
+\begin{frame}[fragile]
+	\frametitle{Compilando o Programa com Informações para Depuração}
 	  \begin{itemize}
-	    \item \texttt{\$ gdb ./programa}
-	    \item \texttt{\$ gdb --args ./programa <arg1> <arg2>}
-	    \item \texttt{\$ gdb \\
-		(gdb) file programa \\
-		(gdb) run <arg2> <arg2> ...}
-	  \end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Parando e Continuando} %FIXME
-	  \begin{itemize}
-	    \item Breakpoints
+	    \item{\verb|gcc -g fonte.c -o programa|}
+	    \item{\verb|CFLAGS="-g3 -O0" ./configure; make|}
 	      \begin{itemize}
-		\item \texttt{break}
-		\item \texttt{tbreak} (breakpoint temporário)
-	      \end{itemize}
-	    \item Watchpoints
-	      \begin{itemize}
-		\item \texttt{watch} (escrita), \texttt{rwatch} (leitura) e \texttt{awatch} (acesso)
-		\item Watchpoints condicionais
-	      \end{itemize}
-	    \item Catchpoints
-	      \begin{itemize}
-		\item \texttt{catch syscall}
+		\item{O segundo parâmetro da variável \verb|CFLAGS| é \textbf{\textit{menos ó zero}}}
 	      \end{itemize}
 	  \end{itemize}
 \end{frame}
 
-\begin{frame}
-	\frametitle{Parando e Continuando}
+\begin{frame}[fragile]
+	\frametitle{Executando o GDB}
 	  \begin{itemize}
-	    \item \texttt{continue}
-	    \item \texttt{next}, \texttt{nexti}
-	    \item \texttt{step}, \texttt{stepi}
-	    \item \texttt{finish}
+	    \item{\verb|gdb ./programa|}
+	    \item{\verb|gdb --args ./programa <arg1> <arg2>|}
+	    \item{\verb|gdb| \\
+		\verb|(gdb) file programa| \\
+		\verb|(gdb) run <arg2> <arg2> ...|}
 	  \end{itemize}
 \end{frame}
 
-\begin{frame}
-	\frametitle{Examinando o código}
+\begin{frame}[fragile]
+	\frametitle{Parando e Continuando a Execução}
 	  \begin{itemize}
-	    \item \texttt{list}
-	    \item \texttt{disassemble}
-	    \item Especifique onde está o código fonte através do comando \\
-		  \texttt{dir <local>}
+	    \item{Breakpoints}
+	      \begin{itemize}
+		\item{\verb|break|}
+		  \begin{itemize}
+		    \item{\verb|break 7| (parar na linha 7)}
+		    \item{\verb|break foo| (parar na função \verb|foo|)}
+		    \item{\verb|break fonte.c:bar| (parar na função \verb|bar|, no arquivo \verb|fonte.c|)}
+		    \item{\verb|break fonte.c:7| (parar na linha 7 do arquivo \verb|fonte.c|)}
+		  \end{itemize}
+		\item{\verb|tbreak| (breakpoint temporário); mesmos argumentos que \verb|break|}
+	      \end{itemize}
+	    \item{Watchpoints}
+	      \begin{itemize}
+		\item{\verb|watch| (escrita), \verb|rwatch| (leitura) e \verb|awatch| (acesso)}
+		\item{Watchpoints condicionais}
+	      \end{itemize}
+	    \item{Catchpoints}
+	      \begin{itemize}
+		\item{\verb|catch syscall|}
+		\item{\verb|catch fork|, com \verb|follow-fork-mode|}
+	      \end{itemize}
 	  \end{itemize}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
+	\frametitle{Parando e Continuando a Execução$^2$}
+	  \begin{itemize}
+	    \item{\verb|continue|}
+	    \item{\verb|next|, \verb|nexti|}
+	    \item{\verb|step|, \verb|stepi|}
+	    \item{\verb|finish|}
+	  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Examinando o Código}
+	  \begin{itemize}
+	    \item{\verb|list|}
+	    \item{\verb|disassemble|}
+	  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
 	\frametitle{TUI (Text User Interface)}
 	  \begin{itemize}
-	    \item Embora não muita difundida, é uma interface bastante útil
-	    \item Pressione CTRL+x a (ou CTRL+x 1 ou CRTL+x 2)
-	    \item Pode ter alguns problemas caso o programa sendo depurado utilize a saida padrão
+	    \item{Embora não muita difundida, é uma interface bastante útil}
+	    \item{Pressione \verb|CTRL+x a| (ou \verb|CTRL+x 1| ou \verb|CTRL+x 2|)}
+	    \item{Pode ter alguns problemas caso o programa sendo depurado utilize a saida padrão}
+	    \item{\textit{Workaround}: sair e entrar novamente na interface}
 	  \end{itemize}
 \end{frame}
 
-\begin{frame}
-	\frametitle{Examinando dados}
+\begin{frame}[fragile]
+	\frametitle{Examinando Dados}
 	  \begin{itemize}
-	    \item \texttt{print <var>}
+	    \item{\verb|print <variável>|}
 	    \begin{itemize}
-	      \item \texttt{p *array@<elementos>}
+	      \item{\verb|p *array@<elementos>|}
 	    \end{itemize}
-	    \item \texttt{x <endereço>}
-	    \item \texttt{whatis <var>}
-	    \item \texttt{display <var>}
-	    \item Configure a exibição de \texttt{structs} através de \\
-		  \texttt{set print pretty on}
+	    \item{\verb|x <endereço>|}
+	    \item{\verb|whatis <variável>|}
+	    \item{\verb|display <variável>| e \verb|info display|}
+	    \item{Configure a exibição de \verb|structs| através de \\
+		  \verb|set print pretty on|}
 	  \end{itemize}
 \end{frame}
 
-\begin{frame}
-	\frametitle{Examinando dados}
+\begin{frame}[fragile]
+	\frametitle{Examinando Dados$^2$}
 	  \begin{itemize}
-	    \item \texttt{bt}
-	    \item \texttt{frame}
-	    \item \texttt{up}, \texttt{down}
+	    \item{\verb|bt|}
+	    \item{\verb|frame|}
+	    \item{\verb|up|, \verb|down|}
 	  \end{itemize}
 \end{frame}
 
-\begin{frame}
-	\frametitle{Alterando o programa depurado}
+\begin{frame}[fragile]
+	\frametitle{Alterando o Programa Depurado}
 	  \begin{itemize}
-	    \item Alterando os dados
+	    \item{Alterando os Dados}
 	      \begin{itemize}
-		\item \texttt{set var <variável> = <valor>}
-		\item \texttt{set \{int\}<endereço> = <valor>}
+		\item{\verb|set var <variável> = <valor>|}
+		\item{\verb|set {int}<endereço> = <valor>|}
 	      \end{itemize}
-	    \item Alterando o fluxo
+	    \item{Alterando o Fluxo}
 	      \begin{itemize}
-		\item \texttt{jump}
-		\item \texttt{return}
+		\item{\verb|jump|}
+		\item{\verb|return|}
 	      \end{itemize}
 	  \end{itemize}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
 	\frametitle{Corefiles} %TODO maiores explicações?
 	  \begin{itemize}
-	  \item Habilite a criação de \texttt{corefiles} com \\
-		\texttt{\$ ulimit -c unlimited}
-	  \item Rodando o GDB \\
-		\texttt{\$ gdb programa core}
-	  \item De dentro do GDB \\
-		\texttt{generate-core-file} \\
-		\texttt{core}
+	  \item{Habilite a criação de \verb|corefiles| com \\
+		\verb|ulimit -c unlimited|}
+	  \item{Executando o GDB \\
+		\verb|gdb programa core.PID|}
+	  \item{De dentro do GDB \\
+		\verb|generate-core-file| \\
+		\verb|core|}
 	  \end{itemize}
 \end{frame}
 
-\begin{frame}
-	\frametitle{Outras informações}
+\begin{frame}[fragile]
+	\frametitle{Outras Informações}
 	  \begin{itemize}
-	    \item \texttt{info}
+	    \item{\verb|info|}
 	    \begin{itemize}
-	      \item \texttt{info breakpoints}
-	      \item \texttt{info watchpoints}
-	      \item \texttt{info locals}
-	      \item \texttt{info registers}
+	      \item{\verb|info breakpoints|}
+	      \item{\verb|info watchpoints|}
+	      \item{\verb|info locals|}
+	      \item{\verb|info registers|}
+	      \item{\verb|...|}
 	    \end{itemize}
 	  \end{itemize}
 \end{frame}
 
-\begin{frame}
-	\frametitle{Em dúvida sobre algum comando?}
+\begin{frame}[fragile]
+	\frametitle{Em Dúvida Sobre Algum Comando?}
 	  \begin{itemize}
-	    \item \texttt{help}
-	    \item \texttt{apropos}
+	    \item{\verb|help|}
+	    \item{\verb|apropos|}
 	  \end{itemize}
 \end{frame}
 
-\begin{frame}
-	\frametitle{Outras funcionalidades}
+\begin{frame}[fragile]
+	\frametitle{Outras Funcionalidades}
 	  \begin{itemize}
-	    \item Tracepoints
-	    \item \texttt{forks} e \texttt{threads}
-	    \item Depuração reversa
-	    \item \texttt{gdbserver}
+	    \item{\verb|Tracepoints|}
+	    \item{\verb|forks| e \verb|threads|}
+	    \item{Depuração Reversa*}
+	    \item{\verb|gdbserver|}
 	  \end{itemize}
 \end{frame}
 
@@ -227,7 +246,7 @@
 	{\tt edjunior@gmail.com} \\
 	\vspace{1\baselineskip}
 	Sérgio Durigan Júnior \\
-	{\tt sergiosdj@gmail.com}
+	{\tt sergiodj@redhat.com}
 	\end{center}
 \end{frame}
 
