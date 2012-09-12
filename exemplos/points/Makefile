@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -g3 -O0
 
-all: breakwatch catch hello
+all: breakwatch catch hello catch-syscall
 
 %.o: %.c
 	$(CC) -o $@ -c $< $(CFLAGS)
