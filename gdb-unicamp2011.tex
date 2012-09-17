@@ -57,6 +57,7 @@
 	\begin{itemize}
 	  \item{O \verb|TAB| é seu amigo}
 	  \item{\verb|help| e \verb|apropos| também}
+	  \item{A tecla \verb|enter| repete o comando anterior}
 	\end{itemize}
 \end{frame}
 
@@ -79,7 +80,34 @@
 	    \item{\verb|gdb --args ./programa <arg1> <arg2>|}
 	    \item{\verb|gdb| \\
 		\verb|(gdb) file programa| \\
-		\verb|(gdb) run <arg2> <arg2> ...|}
+		\verb|(gdb) run <arg2> <arg2> ...|\\
+		ou\\
+		\verb|(gdb) start <arg2> <arg2> ...|}
+	  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Examinando Dados}
+	  \begin{itemize}
+	    \item{\verb|print <variável>|}
+	    \begin{itemize}
+	      \item{\verb|p *array@<elementos>|}
+	    \end{itemize}
+	    \item{\verb|x <endereço>|}
+	    \item{\verb|whatis <variável>|}
+	    \item{\verb|display <variável>| e \verb|info display|}
+	    \item{Configure a exibição de \verb|structs| através de \\
+		  \verb|set print pretty on|}
+	  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{TUI (Text User Interface)}
+	  \begin{itemize}
+	    \item{Embora não muita difundida, é uma interface bastante útil}
+	    \item{Pressione \verb|CTRL+x a| (ou \verb|CTRL+x 1| ou \verb|CTRL+x 2|)}
+	    \item{Pode ter alguns problemas caso o programa sendo depurado utilize a saida padrão ou a janela do terminal seja redimensionada}
+	    \item{\textit{Workaround}: sair e entrar novamente na interface}
 	  \end{itemize}
 \end{frame}
 
@@ -117,6 +145,7 @@
 	    \item{\verb|next|, \verb|nexti|}
 	    \item{\verb|step|, \verb|stepi|}
 	    \item{\verb|finish|}
+	    \item{Loop infinito? \verb|CTRL+c|}
 	  \end{itemize}
 \end{frame}
 
@@ -125,31 +154,6 @@
 	  \begin{itemize}
 	    \item{\verb|list|}
 	    \item{\verb|disassemble|}
-	  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-	\frametitle{TUI (Text User Interface)}
-	  \begin{itemize}
-	    \item{Embora não muita difundida, é uma interface bastante útil}
-	    \item{Pressione \verb|CTRL+x a| (ou \verb|CTRL+x 1| ou \verb|CTRL+x 2|)}
-	    \item{Pode ter alguns problemas caso o programa sendo depurado utilize a saida padrão}
-	    \item{\textit{Workaround}: sair e entrar novamente na interface}
-	  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-	\frametitle{Examinando Dados}
-	  \begin{itemize}
-	    \item{\verb|print <variável>|}
-	    \begin{itemize}
-	      \item{\verb|p *array@<elementos>|}
-	    \end{itemize}
-	    \item{\verb|x <endereço>|}
-	    \item{\verb|whatis <variável>|}
-	    \item{\verb|display <variável>| e \verb|info display|}
-	    \item{Configure a exibição de \verb|structs| através de \\
-		  \verb|set print pretty on|}
 	  \end{itemize}
 \end{frame}
 
@@ -179,13 +183,15 @@
 \end{frame}
 
 \begin{frame}[fragile]
-	\frametitle{Corefiles} %TODO maiores explicações?
+	\frametitle{Corefiles}
 	  \begin{itemize}
+	  \item{Representação do estado do um programa em determinado momento}
+	  \item{Pode ser gerado manualmente (GDB) ou automaticamente em caso de falha do programa}
 	  \item{Habilite a criação de \verb|corefiles| com \\
 		\verb|ulimit -c unlimited|}
 	  \item{Executando o GDB \\
 		\verb|gdb programa core.PID|}
-	  \item{De dentro do GDB \\
+	  \item{Manualmente, de dentro do GDB \\
 		\verb|generate-core-file| \\
 		\verb|core|}
 	  \end{itemize}
