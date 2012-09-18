@@ -212,6 +212,19 @@
 \end{frame}
 
 \begin{frame}[fragile]
+	\frametitle{Depuração Reversa(!!)}
+	  \begin{itemize}
+	    \item{Suportada desde 2008 (mas pouca gente sabe)}
+	    \item{\verb|(gdb) start| \\
+		  \verb|(gdb) target record| \\
+		  \verb|(gdb) next| \\
+		  \verb|(gdb) ...| \\
+		  \verb|(gdb) reverse-next|}
+	    \item{Altere a direção de execução com \verb|set exec-direction [forward,reverse]|}
+	  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
 	\frametitle{Em Dúvida Sobre Algum Comando?}
 	  \begin{itemize}
 	    \item{\verb|help|}
@@ -224,7 +237,6 @@
 	  \begin{itemize}
 	    \item{\verb|Tracepoints|}
 	    \item{\verb|forks| e \verb|threads|}
-	    \item{Depuração Reversa*}
 	    \item{\verb|gdbserver|}
 	  \end{itemize}
 \end{frame}
