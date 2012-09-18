@@ -1,28 +1,38 @@
 /* hello.c -- Exemplo contendo segmentation fault  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-int
-imprimir(char *msg)
+#define ARR_SIZE 7
+
+char **
+make_array(int size)
 {
-  printf("%s\n", msg);
-  return 0;
+  char **arr = malloc(size * sizeof(char *));
+  int i;
+  for(i = 0; i < size; i++) {
+    if(i % 2 == 0) arr[i] = "hello";
+    else arr[i] = " world!";
+  }
+  return arr;
 }
 
-int
-hello(char *param)
+void
+print_array(char **arr, int arrSize)
 {
-  strcpy(param, "Hello World!");
-  imprimir(param);
+  int i;
+  for(i = 0; i <= arrSize; i++) {
+    printf("Index %d = %s\n", i, arr[i]);
+  }
 }
 
 int
 main (int argc, char **argv)
 {
-  char *str = "Ola Mundo!";
+  char **arr = make_array(ARR_SIZE);
 
-  hello(str);
+  print_array(arr, ARR_SIZE);
 
   return 0;
 }
